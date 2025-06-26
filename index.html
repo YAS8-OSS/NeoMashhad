@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>إدخال بيانات القصة</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 5px;
+    }
+    .btn-convert {
+      margin-top: 25px;
+      padding: 12px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn-convert:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>إدخال بيانات القصة</h1>
+
+  <form id="story-form">
+    <label for="username">اسم المستخدم</label>
+    <input type="text" id="username" required placeholder="أدخل اسم المستخدم" />
+
+    <label for="story-type">نوع القصة</label>
+    <select id="story-type" required>
+      <option value="">اختر نوع القصة</option>
+       <option value="manhwa">مانهوا</option>
+    <option value="manga">مانجا</option>
+    <option value="anime">أنمي</option>
+    <option value="novel">رواية</option>
+    </select>
+
+    <label for="release-date">تاريخ الإصدار</label>
+    <input type="date" id="release-date" required />
+
+    <label for="drawing-style">نوع الرسم</label>
+    <select id="drawing-style" required>
+      <option value="">اختر نوع الرسم</option>
+      <option value="كارتوني">كارتوني</option>
+      <option value="واقعي">واقعي</option>
+      <option value="رسوم متحركة">رسوم متحركة</option>
+    </select>
+
+  <label for="male-count">عدد الذكور:</label>
+  <input type="number" id="male-count" min="0" max="5" />
+
+  <label for="female-count">عدد الإناث:</label>
+  <input type="number" id="female-count" min="0" max="5" />
+
+  <div id="character-inputs" class="character-inputs"></div>
+  <div id="error-msg"></div>
+
+    <label for="style-select">ستايل الملابس</label>
+    <select id="style-select" required>
+      <option value="">اختر الستايل</option>
+     <option value="casual">عصرية</option>
+    <option value="fantasy">فانتازيا</option>
+    <option value="traditional">تقليدية</option>
+    <option value="sports">رياضية</option>
+    <option value="modest">محتشمة</option>
+      <option value="كاجوال">كاجوال</option>
+      <option value="رسمي">رسمي</option>
+    </select>
+
+    <label for="language">اللغة</label>
+    <select id="language" required>
+      <option value="">اختر اللغة</option>
+      <option value="ar">العربية</option>
+      <option value="en">الإنجليزية</option>
+      <option value="fr">الفرنسية</option>
+      <option value="es">الإسبانية</option>
+    </select>
+
+    <label>تقييم القصة</label>
+    <div class="radio-group">
+      <label><input type="radio" name="rating" value="1" required /> 1</label>
+      <label><input type="radio" name="rating" value="2" /> 2</label>
+      <label><input type="radio" name="rating" value="3" /> 3</label>
+      <label><input type="radio" name="rating" value="4" /> 4</label>
+      <label><input type="radio" name="rating" value="5" /> 5</label>
+    </div>
+
+    <label for="waiting-time">مدة الانتظار (بالثواني)</label>
+    <input type="number" id="waiting-time" min="0" value="5" required />
+
+    <label for="episode-text">أحداث الحلقة</label>
+    <textarea id="episode-text" placeholder="أدخل نص أحداث الحلقة" required></textarea>
+
+    <button type="submit" class="btn-convert" id="convert-btn">حوّل إلى مشاهد</button>
+  </form>
+
+  <script>
+    document.getElementById('story-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const data = {
+        username: document.getElementById('username').value.trim(),
+        storyType: document.getElementById('story-type').value,
+        releaseDate: document.getElementById('release-date').value,
+        drawingStyle: document.getElementById('drawing-style').value,
+        maleCount: document.getElementById('male-count').value,
+        femaleCount: document.getElementById('female-count').value,
+        styleSelect: document.getElementById('style-select').value,
+        language: document.getElementById('language').value,
+        rating: document.querySelector('input[name="rating"]:checked')?.value || null,
+        waitingTime: document.getElementById('waiting-time').value,
+        episodeText: document.getElementById('episode-text').value.trim()
+      };
+
+      // تخزين البيانات مؤقتاً في localStorage
+      localStorage.setItem('storyData', JSON.stringify(data));
+
+      // الانتقال لصفحة النتائج (مثلاً results.html)
+      window.location.href = 'results.html';
+    });
+  </script>
+ <div class="vip-box">
+    <h3>🎖️ الترقية إلى VIP</h3>
+    <ul>
+      <li>⚡ سرعة أعلى في التحويل</li>
+      <li>🧠 ذكاء أقوى وتحليل أفضل للنص</li>
+      <li>🎭 أنماط مانهوا حصرية</li>
+      <li>👥 دعم عدد شخصيات أكثر</li>
+      <li>💾 حفظ تلقائي للتصاميم والقصص</li>
+      <li>🧍 رفع شخصية مخصصة</li>
+    </ul>
+
+    <form id="vip-form">
+      <label for="full-name">الاسم الكامل:</label>
+      <input type="text" id="full-name" name="full-name" required />
+
+      <label for="email">البريد الإلكتروني:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="card-number">رقم البطاقة (تجريبي):</label>
+      <input type="text" id="card-number" name="card-number" maxlength="16" required />
+
+      <button type="submit">اشترك الآن</button>
+    </form>
+  </div>
+
+  <script>
+    const maleCountInput = document.getElementById('male-count');
+    const femaleCountInput = document.getElementById('female-count');
+    const characterInputsDiv = document.getElementById('character-inputs');
+    const errorMsg = document.getElementById('error-msg');
+
+    function updateCharacterInputs() {
+      const maleCount = parseInt(maleCountInput.value) || 0;
+      const femaleCount = parseInt(femaleCountInput.value) || 0;
+      const total = maleCount + femaleCount;
+
+      if (total > 5) {
+        characterInputsDiv.innerHTML = '';
+        errorMsg.textContent = '⚠️ لا يمكن إدخال أكثر من 5 شخصيات فقط!';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      errorMsg.style.display = 'none';
+      let html = '';
+      if (maleCount > 0) {
+        html += '<strong>أسماء الشخصيات الذكور:</strong>';
+        for (let i = 1; i <= maleCount; i++) {
+         html += `<div><label for="male-name-${i}">اسم ذكر ${i}:</label><input type="text" id="male-name-${i}" name="male-name-${i}" /></div>`;
+
+        }
+      }
+
+      if (femaleCount > 0) {
+        html += '<strong>أسماء الشخصيات الإناث:</strong>';
+        for (let i = 1; i <= femaleCount; i++) {
+          html += `<div><label for="female-name-${i}">اسم أنثى ${i}:</label><input type="text" id="female-name-${i}" name="female-name-${i}" /></div>`;
+        }
+      }
+
+      characterInputsDiv.innerHTML = html;
+    }
+
+    maleCountInput.addEventListener('input', updateCharacterInputs);
+    femaleCountInput.addEventListener('input', updateCharacterInputs);
+  </script>
+
+</body>
+</html>

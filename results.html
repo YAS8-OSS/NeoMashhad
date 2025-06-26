@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>نتائج تحويل النص إلى مشاهد</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 15px;
+      background: #f9f9f9;
+      color: #222;
+      direction: rtl;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    .label {
+      font-weight: bold;
+      color: #34495e;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+    .value {
+      margin-bottom: 10px;
+      padding: 8px;
+      background: #ecf0f1;
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+    ul {
+      list-style-type: disc;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>نتائج تحويل النص إلى مشاهد</h1>
+  <div id="content" class="section">
+    جاري تحميل البيانات...
+  </div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function displayData(data) {
+      const container = document.getElementById('content');
+      if (!data) {
+        container.innerHTML = '<p>لم يتم العثور على بيانات.</p>';
+        return;
+      }
+
+      let html = '';
+
+      html += `<div><span class="label">اسم المستخدم:</span> <span class="value">${data.username || '-'}</span></div>`;
+      html += `<div><span class="label">نوع القصة:</span> <span class="value">${data.storyType || '-'}</span></div>`;
+      html += `<div><span class="label">تاريخ الإصدار:</span> <span class="value">${data.releaseDate || '-'}</span></div>`;
+      html += `<div><span class="label">نوع الرسم:</span> <span class="value">${data.drawingStyle || '-'}</span></div>`;
+      html += `<div><span class="label">عدد الشخصيات الذكور:</span> <span class="value">${data.maleCount || '0'}</span></div>`;
+      html += `<div><span class="label">أسماء الذكور:</span> <ul>${(data.maleNames || []).map(n => `<li>${n}</li>`).join('') || '<li>لا يوجد</li>'}</ul></div>`;
+      html += `<div><span class="label">عدد الشخصيات الإناث:</span> <span class="value">${data.femaleCount || '0'}</span></div>`;
+      html += `<div><span class="label">أسماء الإناث:</span> <ul>${(data.femaleNames || []).map(n => `<li>${n}</li>`).join('') || '<li>لا يوجد</li>'}</ul></div>`;
+      html += `<div><span class="label">ستايل الملابس:</span> <span class="value">${data.styleSelect || '-'}</span></div>`;
+      html += `<div><span class="label">اللغة:</span> <span class="value">${data.language || '-'}</span></div>`;
+      html += `<div><span class="label">تقييم:</span> <span class="value">${data.rating || '-'}</span></div>`;
+      html += `<div><span class="label">مدة الانتظار (ثواني):</span> <span class="value">${data.waitingTime || '-'}</span></div>`;
+      html += `<div><span class="label">نص الحلقة:</span> <div class="value">${data.episodeText || '-'}</div></div>`;
+      html += `<div><span class="label">الرسم السريع (اختياري):</span> <span class="value">${data.quickDraw || '-'}</span></div>`;
+
+      container.innerHTML = html;
+    }
+
+    try {
+      const dataParam = getQueryParam('data');
+      if (!dataParam) throw new Error('لا يوجد بيانات في الرابط');
+
+      const decoded = decodeURIComponent(dataParam);
+      const data = JSON.parse(decoded);
+
+      displayData(data);
+    } catch (err) {
+      document.getElementById('content').innerHTML = `<p>حدث خطأ في تحميل البيانات: ${err.message}</p>`;
+    }
+  </script>
+</body>
+</html>
+
+
+

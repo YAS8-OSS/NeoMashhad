@@ -1,6 +1,5 @@
 import openai
 
-openai.api_key = "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"
 
 input_text = """
 في صباح مشمس، استيقظت ليلى من نومها وقررت الذهاب إلى الحديقة. عند وصولها، وجدت أصدقاءها ينتظرونها للعب كرة القدم.

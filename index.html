@@ -9,7 +9,7 @@
       max-width: 700px;
       margin: 30px auto;
       padding: 15px;
-      background: #f9f9f9;
+      background: #FFC8DD;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
@@ -39,16 +39,49 @@
     .btn-convert {
       margin-top: 25px;
       padding: 12px 20px;
-      background-color: #007bff;
+      background-color: #FFF5DB;
       border: none;
-      color: white;
+      color: #1A1A1A;
       font-size: 16px;
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
     .btn-convert:hover {
-      background-color: #0056b3;
+      background-color: #ffe9c2;
+    }
+    .vip-box {
+      background-color: #FFF5DB;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .vip-box h3 {
+      margin-top: 0;
+      color: #1A1A1A;
+    }
+    .vip-box ul {
+      padding: 0;
+      margin: 10px 0 20px 0;
+      list-style: none;
+    }
+    .vip-box li {
+      margin-bottom: 8px;
+    }
+    .vip-box input, .vip-box button {
+      margin-top: 10px;
+    }
+    .vip-box button {
+      background-color: #FFC8DD;
+      color: #1A1A1A;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .vip-box button:hover {
+      background-color: #ffb3cc;
     }
   </style>
 </head>
@@ -63,10 +96,10 @@
     <label for="story-type">نوع القصة</label>
     <select id="story-type" required>
       <option value="">اختر نوع القصة</option>
-       <option value="manhwa">مانهوا</option>
-    <option value="manga">مانجا</option>
-    <option value="anime">أنمي</option>
-    <option value="novel">رواية</option>
+      <option value="manhwa">مانهوا</option>
+      <option value="manga">مانجا</option>
+      <option value="anime">أنمي</option>
+      <option value="novel">رواية</option>
     </select>
 
     <label for="release-date">تاريخ الإصدار</label>
@@ -80,23 +113,23 @@
       <option value="رسوم متحركة">رسوم متحركة</option>
     </select>
 
-  <label for="male-count">عدد الذكور:</label>
-  <input type="number" id="male-count" min="0" max="5" />
+    <label for="male-count">عدد الذكور:</label>
+    <input type="number" id="male-count" min="0" max="5" />
 
-  <label for="female-count">عدد الإناث:</label>
-  <input type="number" id="female-count" min="0" max="5" />
+    <label for="female-count">عدد الإناث:</label>
+    <input type="number" id="female-count" min="0" max="5" />
 
-  <div id="character-inputs" class="character-inputs"></div>
-  <div id="error-msg"></div>
+    <div id="character-inputs" class="character-inputs"></div>
+    <div id="error-msg" style="color: red; font-weight: bold;"></div>
 
     <label for="style-select">ستايل الملابس</label>
     <select id="style-select" required>
       <option value="">اختر الستايل</option>
-     <option value="casual">عصرية</option>
-    <option value="fantasy">فانتازيا</option>
-    <option value="traditional">تقليدية</option>
-    <option value="sports">رياضية</option>
-    <option value="modest">محتشمة</option>
+      <option value="casual">عصرية</option>
+      <option value="fantasy">فانتازيا</option>
+      <option value="traditional">تقليدية</option>
+      <option value="sports">رياضية</option>
+      <option value="modest">محتشمة</option>
       <option value="كاجوال">كاجوال</option>
       <option value="رسمي">رسمي</option>
     </select>
@@ -128,32 +161,7 @@
     <button type="submit" class="btn-convert" id="convert-btn">حوّل إلى مشاهد</button>
   </form>
 
-  <script>
-    document.getElementById('story-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const data = {
-        username: document.getElementById('username').value.trim(),
-        storyType: document.getElementById('story-type').value,
-        releaseDate: document.getElementById('release-date').value,
-        drawingStyle: document.getElementById('drawing-style').value,
-        maleCount: document.getElementById('male-count').value,
-        femaleCount: document.getElementById('female-count').value,
-        styleSelect: document.getElementById('style-select').value,
-        language: document.getElementById('language').value,
-        rating: document.querySelector('input[name="rating"]:checked')?.value || null,
-        waitingTime: document.getElementById('waiting-time').value,
-        episodeText: document.getElementById('episode-text').value.trim()
-      };
-
-      // تخزين البيانات مؤقتاً في localStorage
-      localStorage.setItem('storyData', JSON.stringify(data));
-
-      // الانتقال لصفحة النتائج (مثلاً results.html)
-      window.location.href = 'results.html';
-    });
-  </script>
- <div class="vip-box">
+  <div class="vip-box">
     <h3>🎖️ الترقية إلى VIP</h3>
     <ul>
       <li>⚡ سرعة أعلى في التحويل</li>
@@ -201,8 +209,7 @@
       if (maleCount > 0) {
         html += '<strong>أسماء الشخصيات الذكور:</strong>';
         for (let i = 1; i <= maleCount; i++) {
-         html += `<div><label for="male-name-${i}">اسم ذكر ${i}:</label><input type="text" id="male-name-${i}" name="male-name-${i}" /></div>`;
-
+          html += `<div><label for="male-name-${i}">اسم ذكر ${i}:</label><input type="text" id="male-name-${i}" name="male-name-${i}" /></div>`;
         }
       }
 
@@ -218,6 +225,27 @@
 
     maleCountInput.addEventListener('input', updateCharacterInputs);
     femaleCountInput.addEventListener('input', updateCharacterInputs);
+
+    document.getElementById('story-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const data = {
+        username: document.getElementById('username').value.trim(),
+        storyType: document.getElementById('story-type').value,
+        releaseDate: document.getElementById('release-date').value,
+        drawingStyle: document.getElementById('drawing-style').value,
+        maleCount: document.getElementById('male-count').value,
+        femaleCount: document.getElementById('female-count').value,
+        styleSelect: document.getElementById('style-select').value,
+        language: document.getElementById('language').value,
+        rating: document.querySelector('input[name="rating"]:checked')?.value || null,
+        waitingTime: document.getElementById('waiting-time').value,
+        episodeText: document.getElementById('episode-text').value.trim()
+      };
+
+      localStorage.setItem('storyData', JSON.stringify(data));
+      window.location.href = 'results.html';
+    });
   </script>
 
 </body>
